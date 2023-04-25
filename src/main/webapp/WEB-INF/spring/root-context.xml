@@ -6,12 +6,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- jdbc property : 현재 파일에만 속성값 적용 -->
-    <context:property-placeholder
-            location="/WEB-INF/jdbc.properties" />
+    <context:property-placeholder location="/WEB-INF/jdbc.properties" />
 
     <!-- jdbc properties : 모든 파일에 속성값 적용 -->
-    <util:properties id="jdbc"
-                     location="/WEB-INF/jdbc.properties" />
+    <util:properties id="jdbc" location="/WEB-INF/jdbc.properties" />
 
     <!-- dbcp datasource -->
     <bean id="dbcpDataSource"
@@ -22,8 +20,6 @@
     <!-- jdbc template -->
     <bean id="jdbcTemplate"
           class="org.springframework.jdbc.core.JdbcTemplate"
-          p:dataSource="dataSource"
-          p:dataSource-ref="dbcpDataSource" />
-
+          p:dataSource="dataSource" p:dataSource-ref="dbcpDataSource" />
 
 </beans>
