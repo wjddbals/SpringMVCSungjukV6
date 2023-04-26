@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>jiho.spring4</groupId>
-    <artifactId>sungjukV6</artifactId>
+    <groupId>riho.spring4</groupId>
+    <artifactId>sungjukv6</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>SpringMVCSungjukV6</name>
     <packaging>war</packaging>
@@ -15,7 +15,10 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <spring.version>4.3.30.RELEASE</spring.version>
-        <junit.version>5.9.1</junit.version>
+
+        <junit.version>4.13.2</junit.version>
+        <log4j.version>2.12.4</log4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
     </properties>
 
     <dependencies>
@@ -24,6 +27,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
+            <exclusions>
+                <!-- Exclude Commons Logging in favor of log4j-core -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -42,6 +52,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <version>2.7.0</version>
+
             <exclusions>
                 <!-- Exclude Commons Logging in favor of log4j-core -->
                 <exclusion>
@@ -49,6 +60,35 @@
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
+
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
 
         <!-- mariadb jdbc driver -->
@@ -57,6 +97,9 @@
             <artifactId>mariadb-java-client</artifactId>
             <version>2.5.4</version>
         </dependency>
+
+
+
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -71,18 +114,14 @@
             <version>1.2</version>
         </dependency>
 
+
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 
     <build>

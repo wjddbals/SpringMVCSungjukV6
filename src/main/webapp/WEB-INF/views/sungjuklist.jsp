@@ -13,7 +13,7 @@
   <%-- for(SungJuk sj:sjs)--%>
   <c:forEach items="${sjs}" var="sj">
     <tr>
-      <td>${sj.name}</td>
+      <td><a href="/view?sjno=${sj.sjno}">${sj.name}</a></td>
       <td>${sj.kor}</td>
       <td>${sj.eng}</td>
       <td>${sj.mat}</td>
@@ -22,6 +22,6 @@
 
 </table>
 
-<p>${sjs}</p>
+<p></p>
 </body>
 </html>

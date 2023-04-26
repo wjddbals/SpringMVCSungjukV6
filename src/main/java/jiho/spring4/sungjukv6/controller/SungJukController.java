@@ -4,10 +4,7 @@ import jiho.spring4.sungjukv6.model.SungJukVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import jiho.spring4.sungjukv6.service.SungJukV6Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,6 +45,22 @@ public class SungJukController {
         if (sjsrv.newSungJuk(sj)) {
             mv.addObject("sj", sj);
             view = "sungjukok";
+        }
+        mv.setViewName(view);
+
+        return mv;
+    }
+
+    //성적본문조회처리
+    @GetMapping("/view")
+    public ModelAndView view(@RequestParam int sjno){ //@RequestParam빼도 된다
+        ModelAndView mv=new ModelAndView();
+        String view="sungjukfail";
+
+        SungJukVO sj=sjsrv.readOneSungJuk(sjno);
+        if( sj!=null){
+            mv.addObject("sj",sj);
+            view="sungjukview";
         }
         mv.setViewName(view);
 
