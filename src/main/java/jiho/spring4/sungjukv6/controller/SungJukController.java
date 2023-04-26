@@ -23,7 +23,7 @@ public class SungJukController {
 
     //성적 리스트 처리
     @GetMapping(value = "/list")
-    public ModelAndView list(  ) {
+    public ModelAndView list() {
         ModelAndView mv = new ModelAndView();
 
         // sungjuklist.jsp에 성적조회결과를 sjs라는 이름으로 넘김
@@ -35,17 +35,22 @@ public class SungJukController {
 
     //성적입력폼표시
     @GetMapping("/add")
-    public String add(){
+    public String add() {
         return "sungjuk";
     }
 
     //성적입력처리
     @PostMapping("/add")
-    public ModelAndView addok(SungJukVO sj){
-        ModelAndView mv=new ModelAndView();
-        mv.addObject("sj",sj);
-        mv.setViewName("sungjukok");
+    public ModelAndView addok(SungJukVO sj) {
+        ModelAndView mv = new ModelAndView();
+        String view = "sungjukfail";
+
+        if (sjsrv.newSungJuk(sj)) {
+            mv.addObject("sj", sj);
+            view = "sungjukok";
+        }
+        mv.setViewName(view);
+
         return mv;
     }
-
 }
