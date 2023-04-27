@@ -18,8 +18,8 @@ import java.util.List;
 @Repository("sjdao")
 public class SungJukV6DAOImpl implements SungJukV4DAO {
 
-    private static final Logger logger= LogManager.getLogger(SungJukV6DAOImpl.class);//logger를 쓸며면 이걸 써야
-    //debug,info(!),warn,error(!),fatal 갈수록 심각
+    private static final Logger logger = LogManager.getLogger(SungJukV6DAOImpl.class);
+    // debug, info(!), warn, error(!), fatal
     private JdbcTemplate jdbcTemplate;
 
     // jdbc.properties 에 정의한 SQL 가져오기
@@ -36,18 +36,19 @@ public class SungJukV6DAOImpl implements SungJukV4DAO {
 
     @Override
     public int insertSungJuk(SungJukVO sj) {
-        int cnt=-1;
+        int cnt = -1;
 
         try {
-            Object[] params=new Object[]{
-                    sj.getName(),sj.getKor(),sj.getEng(),sj.getMat(),sj.getTot(),sj.getAvg(),sj.getGrd() +""
+            // 매개변수 정의
+            Object[] params = new Object[]{
+                    sj.getName(), sj.getKor(), sj.getEng(),
+                    sj.getMat(), sj.getTot(), sj.getAvg(), sj.getGrd()+""
             };
-            cnt=jdbcTemplate.update(insertSQL,params);
-        }catch (Exception ex){
-            logger.error("insertSungJuk오류");
+            cnt = jdbcTemplate.update(insertSQL, params);
+        } catch (Exception ex) {
+            logger.error("insertSungJuk 오류!!");
             logger.info(ex.getMessage());
         }
-        //매개변수 정의               -오브젝트로 타입이 스트링 인트 더블 다양하므로 오브젝트로 담아서
 
         return cnt;
     }
@@ -75,36 +76,40 @@ public class SungJukV6DAOImpl implements SungJukV4DAO {
 
     @Override
     public SungJukVO selectOneSungJuk(int sjno) {
-        Object[] param=new Object[] {sjno};
-        RowMapper<SungJukVO> mapper=new SungJukOneMapper();
+        Object[] param = new Object[] { sjno };
+        RowMapper<SungJukVO> mapper = new SungJukOneMapper();
         SungJukVO sj =
-                jdbcTemplate.queryForObject(selectOneSQL,mapper,param);
-
+                jdbcTemplate.queryForObject(selectOneSQL, mapper, param);
 
         return sj;
     }
+
     private class SungJukOneMapper implements RowMapper<SungJukVO> {
         @Override
         public SungJukVO mapRow(ResultSet rs, int num) throws SQLException {
-            SungJukVO sj=new SungJukVO(rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getInt(5),rs.getInt(6),
-                    rs.getDouble(7),rs.getString(8).charAt(0));
+            SungJukVO sj = new SungJukVO(rs.getString(2),
+                    rs.getInt(3),rs.getInt(4),rs.getInt(5),rs.getInt(6),
+                    rs.getDouble(7), rs.getString(8).charAt(0));
             sj.setSjno(rs.getInt(1));
             sj.setRegdate(rs.getString(9));
+
             return sj;
         }
     }
+
     @Override
     public int updateSungJuk(SungJukVO sj) {
-        int cnt = -1;
+        Object[] param = new Object[] { sj.getKor(), sj.getEng(), sj.getMat(),
+                sj.getTot(), sj.getAvg(), sj.getGrd()+"", sj.getSjno() };
 
-        return cnt;
+        return jdbcTemplate.update(updateSQL, param);
     }
 
     @Override
     public int deleteSungJuk(int sjno) {
-        Object[] param=new Object[] {sjno};
+        Object[] param = new Object[] { sjno };
 
-        return jdbcTemplate.update(deleteSQL,param);
+        return jdbcTemplate.update(deleteSQL, param);
     }
 
 

@@ -14,8 +14,7 @@ import java.util.List;
 public class SungJukV6ServiceImpl implements SungJukV6Service {
 
     private SungJukV4DAO sjdao = null;
-    private static final Logger logger= LogManager.getLogger(SungJukV6ServiceImpl.class);
-
+    private static final Logger logger = LogManager.getLogger(SungJukV6ServiceImpl.class);
 
     @Autowired
     public SungJukV6ServiceImpl(SungJukV4DAO sjdao) {
@@ -24,15 +23,22 @@ public class SungJukV6ServiceImpl implements SungJukV6Service {
 
     public boolean removeSungJuk(int sjno) {
         sjdao.deleteSungJuk(sjno);
+
         return true;
     }
 
     public boolean modifySungJuk(SungJukVO sj) {
-        return false;
+        boolean result = false;
+        computeSungJuk(sj);
+
+        if (sjdao.updateSungJuk(sj) > 0) result = true;
+
+        return result;
     }
 
     public SungJukVO readOneSungJuk(int sjno) {
-    return sjdao.selectOneSungJuk(sjno);
+
+        return sjdao.selectOneSungJuk(sjno);
     }
 
     // 성적 리스트 받아옴
@@ -41,20 +47,19 @@ public class SungJukV6ServiceImpl implements SungJukV6Service {
         return sjdao.selectSungJuk();
     }
 
-    //성적데이터 저장
+    // 성적 데이터 저장
     public boolean newSungJuk(SungJukVO sj) {
-        boolean result=false;
+        boolean result = false;
 
         this.computeSungJuk(sj);
         logger.info(sj);
 
-        if (sjdao.insertSungJuk(sj)>0) result=true;
+        if (sjdao.insertSungJuk(sj) > 0) result = true;
 
         return result;
-
     }
 
-    //성적데이터 처리
+    // 성적 데이터 처리
     public void computeSungJuk(SungJukVO sj) {
         sj.setTot( sj.getKor() + sj.getEng() + sj.getMat() );
         sj.setAvg( (double) sj.getTot() / 3 );

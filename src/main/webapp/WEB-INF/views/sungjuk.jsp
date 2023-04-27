@@ -16,3 +16,5 @@
   <div>수학 : <input type = "text" name = "mat"></div>
   <div><button type="submit">입력완료</button></div>
 </form>
+</body>
+</html>

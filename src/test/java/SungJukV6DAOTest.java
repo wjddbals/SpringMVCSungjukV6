@@ -65,5 +65,15 @@ public class SungJukV6DAOTest {
 
     private void assertEqulals(int i, int cnt) {
     }
+    @Test //테스트 슈트
+    public void test4() {
+        System.out.println(">>Test 4시작<<");
 
+        SungJukVO sj=new SungJukVO(null,11,22,33);
+        sj.setSjno(4);
+        sj.setTot(0);
+        sj.setAvg(0.0);sj.setGrd('ㅋ');
+
+        assertEqulals(1,sjdao.updateSungJuk(sj));
+    }
 }
